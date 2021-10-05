@@ -3,7 +3,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
 import { ActivityIndicator } from 'react-native';
 
-import { formatCurrency, formatDate } from '../../utils/helpers';
+import {
+  formatCurrency,
+  formatDate,
+  getTransactionsByType,
+} from '../../utils/helpers';
 
 import { HighlightCard } from '../../components/HighlightCard';
 import {
@@ -62,9 +66,9 @@ export function Dashboard() {
     const lastTransaction = new Date(
       Math.max.apply(
         Math,
-        collection
-          .filter((transaction) => transaction.type === type)
-          .map((transaction) => new Date(transaction.date).getTime())
+        getTransactionsByType(collection, type).map((transaction) =>
+          new Date(transaction.date).getTime()
+        )
       )
     );
 

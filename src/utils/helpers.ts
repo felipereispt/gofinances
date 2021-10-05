@@ -1,3 +1,5 @@
+import { TransactionsProps } from '../components/TransactionCard';
+
 function formatCurrency(value: number) {
   return Intl.NumberFormat('pt-BR', {
     style: 'currency',
@@ -13,4 +15,11 @@ function formatDate(date: Date) {
   }).format(date);
 }
 
-export { formatCurrency, formatDate };
+function getTransactionsByType(
+  collection: TransactionsProps[],
+  type: 'positive' | 'negative'
+) {
+  return collection.filter((transaction) => transaction.type === type);
+}
+
+export { formatCurrency, formatDate, getTransactionsByType };

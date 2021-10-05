@@ -12,13 +12,12 @@ import { CategorySelect } from '../../components/Form/CategorySelect';
 import { InputForm } from '../../components/Form/InputForm';
 import { TransactionTypeButton } from '../../components/Form/TransactionTypeButton';
 import { CategorySelectModal } from '../CategorySelectModal';
+import { Header } from '../../components/Header';
 
 import {
   Container,
   Fields,
   Form,
-  Header,
-  Title,
   TransactionTypeButtonsContainer,
 } from './styles';
 
@@ -116,9 +115,7 @@ export function Register() {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
-        <Header>
-          <Title>Cadastro</Title>
-        </Header>
+        <Header title="Cadastro" />
 
         <Form>
           <Fields>
