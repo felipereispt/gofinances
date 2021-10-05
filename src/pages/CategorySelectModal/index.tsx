@@ -1,19 +1,16 @@
 import React from 'react';
 import { FlatList } from 'react-native';
-
 import { Button } from '../../components/Form/Button';
-
 import { categories } from '../../utils/categories';
-
 import {
-  Container,
-  Header,
-  Title,
   Category,
+  Container,
+  Footer,
+  Header,
   Icon,
   Name,
   Separator,
-  Footer,
+  Title,
 } from './styles';
 
 interface Category {
@@ -27,7 +24,11 @@ interface CategorySelectModalProps {
   closeSelectCategory: () => void;
 }
 
-export function CategorySelectModal({ category, setCategory, closeSelectCategory }: CategorySelectModalProps) {
+export function CategorySelectModal({
+  category,
+  setCategory,
+  closeSelectCategory,
+}: CategorySelectModalProps) {
   return (
     <Container>
       <Header>
@@ -38,7 +39,7 @@ export function CategorySelectModal({ category, setCategory, closeSelectCategory
         data={categories}
         style={{
           flex: 1,
-          width: '100%'
+          width: '100%',
         }}
         keyExtractor={(item) => item.key}
         renderItem={({ item }) => (
@@ -54,10 +55,7 @@ export function CategorySelectModal({ category, setCategory, closeSelectCategory
       />
 
       <Footer>
-        <Button
-          title="Selecionar"
-          onPress={closeSelectCategory}
-        />
+        <Button title="Selecionar" onPress={closeSelectCategory} />
       </Footer>
     </Container>
   );

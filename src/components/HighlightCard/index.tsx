@@ -1,13 +1,12 @@
 import React from 'react';
-
 import {
-  Container,
-  Header,
-  Title,
-  Icon,
-  Content,
   Amount,
+  Container,
+  Content,
+  Header,
+  Icon,
   LastTransaction,
+  Title,
 } from './styles';
 
 interface HighlightCardProps {
@@ -20,14 +19,14 @@ interface HighlightCardProps {
 const icon = {
   up: 'arrow-up-circle',
   down: 'arrow-down-circle',
-  total: 'dollar-sign'
-}
+  total: 'dollar-sign',
+};
 
 export function HighlightCard({
   type,
   title,
   amount,
-  lastTransaction
+  lastTransaction,
 }: HighlightCardProps) {
   return (
     <Container type={type}>

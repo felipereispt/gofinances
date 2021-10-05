@@ -1,8 +1,12 @@
-import styled from 'styled-components/native';
-import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
 import { Feather } from '@expo/vector-icons';
-import { getStatusBarHeight, getBottomSpace } from 'react-native-iphone-x-helper';
 import { FlatList } from 'react-native';
+import { BorderlessButton } from 'react-native-gesture-handler';
+import {
+  getBottomSpace,
+  getStatusBarHeight,
+} from 'react-native-iphone-x-helper';
+import { RFPercentage, RFValue } from 'react-native-responsive-fontsize';
+import styled from 'styled-components/native';
 
 import { TransactionsListProps } from './';
 
@@ -60,6 +64,8 @@ export const UserName = styled.Text`
   font-size: ${RFValue(18)}px;
 `;
 
+export const LogoutButton = styled(BorderlessButton)``;
+
 export const Icon = styled(Feather)`
   color: ${({ theme }) => theme.colors.secondary};
   font-size: ${RFValue(24)}px;
@@ -68,7 +74,7 @@ export const Icon = styled(Feather)`
 export const HighlightCards = styled.ScrollView.attrs({
   horizontal: true,
   showsHorizontalScrollIndicator: false,
-  contentContainerStyle: { paddingHorizontal: 24 }
+  contentContainerStyle: { paddingHorizontal: 24 },
 })`
   width: 100%;
 
@@ -80,17 +86,25 @@ export const TransactionsContainer = styled.View`
   flex: 1;
   padding: 0 24px;
 
-  margin-top: ${RFPercentage(12)}px;
+  margin-top: ${RFPercentage(8)}px;
 `;
 
-export const TransactionsList = styled(FlatList as new () => FlatList<TransactionsListProps>).attrs({
+export const TransactionsList = styled(
+  FlatList as new () => FlatList<TransactionsListProps>
+).attrs({
   showsVerticalScrollIndicator: false,
   contentContainerStyle: {
-    paddingBottom: getBottomSpace()
-  }
+    paddingBottom: getBottomSpace(),
+  },
 })``;
 
 export const Title = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular};
   font-size: ${RFValue(18)}px;
+`;
+
+export const LoadingContainer = styled.ActivityIndicator`
+  flex: 1;
+  justify-content: center;
+  align-items: center;
 `;
