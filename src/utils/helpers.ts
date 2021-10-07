@@ -22,4 +22,22 @@ function getTransactionsByType(
   return collection.filter((transaction) => transaction.type === type);
 }
 
-export { formatCurrency, formatDate, getTransactionsByType };
+function getTransactionsByTypeAndDate(
+  collection: TransactionsProps[],
+  type: 'positive' | 'negative',
+  date: Date
+) {
+  return collection.filter(
+    (transaction) =>
+      transaction.type === type &&
+      new Date(transaction.date).getMonth() === date.getMonth() &&
+      new Date(transaction.date).getFullYear() === date.getFullYear()
+  );
+}
+
+export {
+  formatCurrency,
+  formatDate,
+  getTransactionsByType,
+  getTransactionsByTypeAndDate,
+};

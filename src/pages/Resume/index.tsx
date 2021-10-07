@@ -6,12 +6,17 @@ import { VictoryPie } from 'victory-native';
 import { ActivityIndicator } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
+import { addMonths, subMonths, format } from 'date-fns';
+import { ptBR } from 'date-fns/locale';
 
 import { Header } from '../../components/Header';
 import { HistoryCard } from '../../components/HistoryCard';
 import { TransactionsProps } from '../../components/TransactionCard';
 
-import { getTransactionsByType, formatCurrency } from '../../utils/helpers';
+import {
+  getTransactionsByTypeAndDate,
+  formatCurrency,
+} from '../../utils/helpers';
 import { categories } from '../../utils/categories';
 
 import {
@@ -19,6 +24,10 @@ import {
   LoadingContainer,
   ChartContainer,
   HistoryCardContainer,
+  MonthSelect,
+  MonthSelectButton,
+  MonthSelectSelectIcon,
+  Month,
 } from './styles';
 
 interface CategoriesTotal {
@@ -32,15 +41,29 @@ interface CategoriesTotal {
 export function Resume() {
   const [isLoading, setIsLoading] = useState(true);
   const [categoriesTotal, setCategoriesTotal] = useState<CategoriesTotal[]>([]);
+  const [selectedDate, setSelectedDate] = useState(new Date());
 
   const theme = useTheme();
+
+  function handleDateChange(action: 'next' | 'prev') {
+    if (action === 'next') {
+      setSelectedDate(addMonths(selectedDate, 1));
+      return;
+    }
+
+    setSelectedDate(subMonths(selectedDate, 1));
+  }
 
   async function loadData() {
     setIsLoading(true);
     const data = await AsyncStorage.getItem('@gofinances:transactions');
     const transactionsData = data ? JSON.parse(data) : [];
 
-    const expensives = getTransactionsByType(transactionsData, 'negative');
+    const expensives = getTransactionsByTypeAndDate(
+      transactionsData,
+      'negative',
+      selectedDate
+    );
     const expensivesTotal = expensives.reduce(
       (acumullator: number, expensive: TransactionsProps) => {
         return acumullator + Number(expensive.amount);
@@ -81,18 +104,32 @@ export function Resume() {
   useFocusEffect(
     useCallback(() => {
       loadData();
-    }, [])
+    }, [selectedDate])
   );
 
   return (
     <Container>
+      <Header title="Resumo por categoria" />
+
       {isLoading ? (
         <LoadingContainer>
           <ActivityIndicator color={theme.colors.primary} size="large" />
         </LoadingContainer>
       ) : (
         <>
-          <Header title="Resumo por categoria" />
+          <MonthSelect>
+            <MonthSelectButton onPress={() => handleDateChange('prev')}>
+              <MonthSelectSelectIcon name="chevron-left" />
+            </MonthSelectButton>
+
+            <Month>
+              {format(selectedDate, 'MMMM, yyyy', { locale: ptBR })}
+            </Month>
+
+            <MonthSelectButton onPress={() => handleDateChange('next')}>
+              <MonthSelectSelectIcon name="chevron-right" />
+            </MonthSelectButton>
+          </MonthSelect>
 
           <ChartContainer>
             <VictoryPie
