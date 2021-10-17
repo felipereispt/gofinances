@@ -1,9 +1,10 @@
 import { TransactionsProps } from '../components/TransactionCard';
+import * as Localization from 'expo-localization';
 
 function formatCurrency(value: number) {
-  return Intl.NumberFormat('pt-BR', {
+  return Intl.NumberFormat(String(Localization.locale), {
     style: 'currency',
-    currency: 'BRL',
+    currency: String(Localization.currency),
   }).format(value);
 }
 

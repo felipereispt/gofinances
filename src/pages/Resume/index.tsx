@@ -44,6 +44,7 @@ export function Resume() {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   const theme = useTheme();
+  const bottomTabBarHeight = useBottomTabBarHeight();
 
   function handleDateChange(action: 'next' | 'prev') {
     if (action === 'next') {
@@ -151,7 +152,7 @@ export function Resume() {
             showsVerticalScrollIndicator={false}
             contentContainerStyle={{
               paddingHorizontal: 24,
-              paddingBottom: useBottomTabBarHeight(),
+              paddingBottom: bottomTabBarHeight,
             }}
           >
             {categoriesTotal.map((item) => (
